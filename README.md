@@ -10,7 +10,6 @@ and put it on your server /etc/matrix.conf
 api_version: core/v2
 type: Handler
 metadata:
-  namespace: thorko
   name: matrix
 spec:
   type: pipe
