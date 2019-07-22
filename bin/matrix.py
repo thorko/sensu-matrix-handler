@@ -10,6 +10,7 @@ import configparser
 import imp
 import logging
 import os
+import sys
 from matrix_client.client import MatrixClient
 
 
@@ -22,13 +23,13 @@ def flags():
     parser.add_argument('room', type=str, nargs='?',
                         help='room to deliver message to')
     parser.add_argument('message', type=str, nargs='+',
-                        help='the message to Matrix')
+                        help='the message to Matrix', default=sys.stdin)
     parser.add_argument('-u', '--user', type=str, dest='username',
                         help='username to use (overrides the config)')
     parser.add_argument('-p', '--password', type=str, dest='password',
                         help='password to use (overrides the config)')
     parser.add_argument('-c', '--config', type=str, dest='config',
-                        default='/etc/zabbix-bot.conf',
+                        default='/etc/matrix-bot.conf',
                         help=('specifies the config file '
                               '(defaults to /etc/matrix.conf)'))
     parser.add_argument('-t', '--type', type=str, dest='message_type',
