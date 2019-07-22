@@ -4,7 +4,7 @@ builds:
 - platform: "linux"
   arch: "amd64"
   asset_filename: "#{repo}_#{version}_linux_amd64.tar.gz"
-  sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
+  sha_filename: "#{repo}_#{version}_sha512_checksums.txt"
   filter:
   -  "entity.system.os == 'linux'"
   -  "entity.system.arch == 'amd64'"
