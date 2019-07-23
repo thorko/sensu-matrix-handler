@@ -112,17 +112,10 @@ def send_message(config, room):
     """
     color = ""
     colors = read_config(args['config'], conf_section='Colors')
-    message = config['message']
-    msg = message.split(" ")
-    for c in colors:
-        if c == msg[1]:
-            color = colors[c]
-    if msg[0] == "OK":
-        message = "<font color='#2ecc71'>&#10004; " + message + "</font>"
-    if msg[0] == "PROBLEM":
-        message = "<font color='" + color + "'>&#9888; " + message + "</font>"
-    logging.debug('sending message:\n%s', message)
-    room.send_html(message, msgtype=config['message_type'])
+    lines = sys.stdin.readlines()
+    for i in range(len(lines)):
+        logging.debug('sending message:\n%s', lines[i])
+        room.send_html(lines[i], msgtype=config['message_type'])
 
 
 def set_log_level(level='INFO'):
