@@ -11,6 +11,8 @@ import imp
 import logging
 import os
 import sys
+import json
+from pprint import pprint
 from matrix_client.client import MatrixClient
 
 
@@ -20,8 +22,6 @@ def flags():
     :return: dictionary of the arguments
     """
     parser = argparse.ArgumentParser(description='Python to Matrix bridge.')
-    parser.add_argument('room', type=str, nargs='?',
-                        help='room to deliver message to')
     parser.add_argument('message', type=str, nargs='+',
                         help='the message to Matrix', default=sys.stdin)
     parser.add_argument('-u', '--user', type=str, dest='username',
@@ -113,9 +113,16 @@ def send_message(config, room):
     color = ""
     colors = read_config(args['config'], conf_section='Colors')
     lines = sys.stdin.readlines()
-    for i in range(len(lines)):
-        logging.debug('sending message:\n%s', lines[i])
-        room.send_html(lines[i], msgtype=config['message_type'])
+    data = ""
+    for line in lines:
+        data = data.join(line)
+    obj = json.loads(data)
+    for c in colors:
+        if str(c) == str(obj['check']['status']):
+            color = colors[c]
+    message = "<font color='" + color + "'>" + obj['entity']['system']['hostname'] + ": " + obj['check']['output'] + "</font>"
+    logging.debug('sending message:\n%s', message)
+    room.send_html(lines[i], msgtype=config['message_type'])
 
 
 def set_log_level(level='INFO'):
@@ -150,6 +157,6 @@ if __name__ == '__main__':
     logging.debug('config: %s', config)
 
     client, room = setup(config)
-    send_message(config, room)
+    send_message(config, config['room'])
     if 'token' not in config:
         client.logout()

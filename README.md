@@ -15,6 +15,6 @@ spec:
   type: pipe
   runtime_assets:
   - matrix-handler
-  command: matrix.py -c /etc/matrix.conf "#room"
+  command: matrix.py -c /etc/matrix.conf
   timeout: 10
 ```
