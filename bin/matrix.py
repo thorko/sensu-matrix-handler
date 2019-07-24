@@ -22,7 +22,7 @@ def flags():
     :return: dictionary of the arguments
     """
     parser = argparse.ArgumentParser(description='Python to Matrix bridge.')
-    parser.add_argument('message', type=str, nargs='+',
+    parser.add_argument('message', type=str, nargs='?',
                         help='the message to Matrix', default=sys.stdin)
     parser.add_argument('-u', '--user', type=str, dest='username',
                         help='username to use (overrides the config)')
@@ -121,8 +121,9 @@ def send_message(config, room):
         if str(c) == str(obj['check']['status']):
             color = colors[c]
     message = "<font color='" + color + "'>" + obj['entity']['system']['hostname'] + ": " + obj['check']['output'] + "</font>"
+    pprint(message)
     logging.debug('sending message:\n%s', message)
-    room.send_html(lines[i], msgtype=config['message_type'])
+    room.send_html(message, msgtype=config['message_type'])
 
 
 def set_log_level(level='INFO'):
@@ -139,7 +140,7 @@ def set_log_level(level='INFO'):
 
 if __name__ == '__main__':
     args = flags()
-    args['message'] = " ".join(args['message'])
+    #args['message'] = " ".join(args['message'])
     if args['debug'] is True:
         set_log_level('DEBUG')
 
@@ -157,6 +158,6 @@ if __name__ == '__main__':
     logging.debug('config: %s', config)
 
     client, room = setup(config)
-    send_message(config, config['room'])
+    send_message(config, room)
     if 'token' not in config:
         client.logout()
