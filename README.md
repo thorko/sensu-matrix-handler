@@ -4,6 +4,9 @@ send alerts to matrix room
 configure etc/matrix.conf
 and put it on your server /etc/matrix.conf
 
+## Requirements
+- python-matrix-client-git
+
 ## Usage
 
 ```
