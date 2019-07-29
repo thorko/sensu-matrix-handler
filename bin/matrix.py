@@ -120,7 +120,7 @@ def send_message(config, room):
     for c in colors:
         if str(c) == str(obj['check']['status']):
             color = colors[c]
-    message = "<font color='" + color + "'>" + obj['entity']['system']['hostname'] + ": " + obj['check']['output'] + "</font>"
+    message = "<font color='" + color + "'>" + obj['entity']['system']['hostname'] + ": " + obj['check']['output'] + "history: " + obj['check']['history'] + "</font>"
     pprint(message)
     logging.debug('sending message:\n%s', message)
     room.send_html(message, msgtype=config['message_type'])
