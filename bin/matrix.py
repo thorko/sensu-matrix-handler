@@ -12,7 +12,7 @@ import logging
 import os
 import sys
 import json
-import datetime
+from datetime import datetime
 from pprint import pprint
 from matrix_client.client import MatrixClient
 
