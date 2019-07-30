@@ -12,6 +12,7 @@ import logging
 import os
 import sys
 import json
+import datetime
 from pprint import pprint
 from matrix_client.client import MatrixClient
 
@@ -120,7 +121,11 @@ def send_message(config, room):
     for c in colors:
         if str(c) == str(obj['check']['status']):
             color = colors[c]
-    message = "<font color='" + color + "'>" + obj['entity']['system']['hostname'] + ": " + obj['check']['output'] + "history: " + obj['check']['history'] + "</font>"
+    history = "history: "
+    for hist in obj['check']['history']:
+        dt = datetime.fromtimestamp(hist['executed'])
+        history = history + "status: " + str(hist['status']) + " " + str(dt) + ", "
+    message = "<font color='" + color + "'>" + obj['entity']['system']['hostname'] + ": " + obj['check']['output'] + " " + history + "</font>"
     pprint(message)
     logging.debug('sending message:\n%s', message)
     room.send_html(message, msgtype=config['message_type'])
