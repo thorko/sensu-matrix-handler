@@ -122,7 +122,7 @@ def send_message(config, room):
         if str(c) == str(obj['check']['status']):
             color = colors[c]
     history = "history: "
-    if hist not None:
+    if obj['check']['history'] is not None:
         for hist in obj['check']['history']:
             dt = datetime.fromtimestamp(hist['executed'])
             history = history + "status: " + str(hist['status']) + " " + str(dt) + ", "
