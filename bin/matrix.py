@@ -114,9 +114,7 @@ def send_message(config, room):
     color = ""
     colors = read_config(args['config'], conf_section='Colors')
     lines = sys.stdin.readlines()
-    data = ""
-    for line in lines:
-        data = data.join(line)
+    data = "".join(lines)
     obj = json.loads(data)
     for c in colors:
         if str(c) == str(obj['check']['status']):
